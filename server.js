@@ -26,7 +26,7 @@ async function run() {
       });
     });
     app.get("/products", async (req, res) => {
-      const data = productCollection.find({}).limit(10);
+      const data = productCollection.find({ name: { $regex: "babySit" } });
       const documents = await data.toArray();
       res.send(documents);
     });
@@ -45,7 +45,7 @@ async function run() {
     });
     app.get("/fiendemail", async (req, res) => {
       console.log(req.query.email);
-      const data = registerCollection.find({email: req.query.email});
+      const data = registerCollection.find({ email: req.query.email });
       const documents = await data.toArray();
       res.send(documents);
     });
