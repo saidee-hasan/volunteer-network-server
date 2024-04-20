@@ -6,12 +6,12 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(cors());
 const { ObjectId } = require("mongodb");
-const router = express.Router();
+
 require("dotenv").config();
 const { MongoClient } = require("mongodb");
 
 // Replace the uri string with your connection string.
-const uri = "mongodb+srv://eGRHe6yRNSMjHGIh:volunter@volunteer.71crcs5.mongodb.net/?retryWrites=true&w=majority&appName=volunteer";
+const uri = `mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASS}@volunteer.71crcs5.mongodb.net/?retryWrites=true&w=majority&appName=volunteer`;
 const client = new MongoClient(uri);
 
 async function run() {
@@ -25,7 +25,7 @@ async function run() {
         console.log(result.insertedCount);
       });
     });
-   router.app.get("/products", async (req, res) => {
+    app.get("/products", async (req, res) => {
       const data = productCollection.find({ name: { $regex: "babySit" } });
       const documents = await data.toArray();
       res.send(documents);
