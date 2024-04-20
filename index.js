@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(cors());
 const { ObjectId } = require("mongodb");
-
+const router = express.Router();
 require("dotenv").config();
 const { MongoClient } = require("mongodb");
 
@@ -25,7 +25,7 @@ async function run() {
         console.log(result.insertedCount);
       });
     });
-    app.get("/products", async (req, res) => {
+   router.app.get("/products", async (req, res) => {
       const data = productCollection.find({ name: { $regex: "babySit" } });
       const documents = await data.toArray();
       res.send(documents);
